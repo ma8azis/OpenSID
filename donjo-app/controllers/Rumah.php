@@ -14,8 +14,47 @@ class Rumah extends Admin_Controller
 		$this->load->model('plan_garis_model');
 		$this->load->model('header_model');
 		$this->load->model('wilayah_model');
-		$this->modul_ini = 9;
+		$this->modul_ini = 204;
 		$this->load->database();
+	}
+
+	public function clear_janda()
+	{
+		unset($_SESSION['cari']);
+		unset($_SESSION['filter']);
+		redirect('rumah/janda');
+	}
+
+	public function janda($p = 1, $o = 0)
+	{
+		$data['p'] = $p;
+		$data['o'] = $o;
+
+		if (isset($_SESSION['cari']))
+			$data['cari'] = $_SESSION['cari'];
+		else $data['cari'] = '';
+
+		if (isset($_SESSION['filter']))
+			$data['filter'] = $_SESSION['filter'];
+		else $data['filter'] = '';
+
+		if (isset($_POST['per_page']))
+			$_SESSION['per_page'] = $_POST['per_page'];
+
+		$data['per_page'] = $_SESSION['per_page'];
+		$data['paging'] = $this->wilayah_model->paging($p, $o);
+		$data['main'] = $this->wilayah_model->list_data($o, $data['paging']->offset, $data['paging']->per_page);
+		$data['keyword'] = $this->wilayah_model->autocomplete();
+		$data['total'] = $this->wilayah_model->total();
+
+		$nav['act'] = 2;
+		$nav['act_sub'] = 20;
+		$header = $this->header_model->get_data();
+
+		$this->load->view('header', $header);
+		$this->load->view('nav', $nav);
+		$this->load->view('rumah/wilayah/wilayah', $data);
+		$this->load->view('footer');
 	}
 
 	public function clear()

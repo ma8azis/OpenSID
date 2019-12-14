@@ -80,7 +80,7 @@ if (is_file($konfigurasi_db)) {
 } else {
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['username'] = 'root';
-	$db['default']['password'] = 'admin';
+	$db['default']['password'] = '';
 	$db['default']['database'] = 'opensid';
 }
 $db['default']['dbdriver'] = 'mysqli';

@@ -1,6 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Rtm extends Admin_Controller {
+class Rtm extends Admin_Controller
+{
 
 	public function __construct()
 	{
@@ -46,25 +47,19 @@ class Rtm extends Admin_Controller {
 
 		$data['per_page'] = $_SESSION['per_page'];
 
-		if (isset($_SESSION['dusun']))
-		{
+		if (isset($_SESSION['dusun'])) {
 			$data['dusun'] = $_SESSION['dusun'];
 			$data['list_rw'] = $this->penduduk_model->list_rw($data['dusun']);
 
-			if (isset($_SESSION['rw']))
-			{
+			if (isset($_SESSION['rw'])) {
 				$data['rw'] = $_SESSION['rw'];
 				$data['list_rt'] = $this->penduduk_model->list_rt($data['dusun'], $data['rw']);
 
 				if (isset($_SESSION['rt']))
 					$data['rt'] = $_SESSION['rt'];
 				else $data['rt'] = '';
-
-			}
-			else $data['rw'] = '';
-		}
-		else
-		{
+			} else $data['rw'] = '';
+		} else {
 			$data['dusun'] = '';
 			$data['rw'] = '';
 			$data['rt'] = '';
@@ -208,7 +203,7 @@ class Rtm extends Admin_Controller {
 		$data['kk'] = $id;
 
 		$data['main'] = $this->rtm_model->list_anggota($id);
-		$data['kepala_kk']= $this->rtm_model->get_kepala_rtm($id);
+		$data['kepala_kk'] = $this->rtm_model->get_kepala_rtm($id);
 
 		$nav['act'] = 2;
 		$nav['act_sub'] = 23;
