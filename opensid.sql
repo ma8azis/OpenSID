@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 14/12/2019 21:12:06
+ Date: 15/12/2019 07:16:16
 */
 
 SET NAMES utf8mb4;
@@ -1642,7 +1642,7 @@ CREATE TABLE `config`  (
 -- ----------------------------
 -- Records of config
 -- ----------------------------
-INSERT INTO `config` VALUES (1, 'Jono', '05', 'Muhammad Ilham ', '--', '83355', 'Temayang', '14', 'Bambang Budi Sanyoto, S. H', '-', 'Bojonegoro', '01', 'Jawa Timur', '35', 'Logo_Kabupaten_Bojonegoro_vector_logo__sid__hUeZviK.png', '-7.311741278388231', '111.89800500869752', 15, 'HYBRID', '[[[-7.3189087156291395,111.89661026000978],[-7.319631852739235,111.90669536590578],[-7.312995962350189,111.91133022308351],[-7.308274211047472,111.91137313842775],[-7.305253965573895,111.89630985260011],[-7.314272102780184,111.892147064209],[-7.318866178115588,111.89424991607667]]]', 'RT. 07 RW. 08 Dk. Krajan, Ngancaran, Jono, Temayang, Kabupaten Bojonegoro, Jawa Timur 62184', '', '', '');
+INSERT INTO `config` VALUES (1, 'Jono', '05', 'Muhammad Ilham ', '--', '83355', 'Temayang', '14', 'Bambang Budi Sanyoto, S. H', '-', 'Bojonegoro', '01', 'Jawa Timur', '35', 'Logo_Kabupaten_Bojonegoro_vector_logo__sid__hUeZviK.png', '-7.311741278388231', '111.89800500869752', 14, 'HYBRID', '[[[-7.32313827926585,111.89927101135255],[-7.3220315804605605,111.90871238708498],[-7.312071167657926,111.91214561462404],[-7.309517179855305,111.90914154052736],[-7.306537508962423,111.90613746643068],[-7.303132146470595,111.9056224822998],[-7.299726758039678,111.90596580505371],[-7.296151072283195,111.90519332885744],[-7.300067298049692,111.89171791076662],[-7.303217280849074,111.88768386840822],[-7.307559112650076,111.88536643981934],[-7.31198603496649,111.88356399536134],[-7.316455479319456,111.88334941864015],[-7.320158699302137,111.88691139221193],[-7.322712626204286,111.89317703247072]]]', 'RT. 07 RW. 08 Dk. Krajan, Ngancaran, Jono, Temayang, Kabupaten Bojonegoro, Jawa Timur 62184', '', '', '');
 
 -- ----------------------------
 -- Table structure for data_persil
@@ -2625,21 +2625,24 @@ CREATE TABLE `inventaris_tanah`  (
 DROP TABLE IF EXISTS `janda`;
 CREATE TABLE `janda`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `id_janda` int(11) NULL DEFAULT NULL,
   `lat` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `lng` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `zoom` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `map_tipe` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of janda
 -- ----------------------------
-INSERT INTO `janda` VALUES (1, 'Sholikah', '-7.3173067969789', '111.89712524414', '14', 'HYBRID');
-INSERT INTO `janda` VALUES (2, 'Rumini', '-7.314029215080512', '111.8910312652588', '14', 'HYBRID');
-INSERT INTO `janda` VALUES (3, 'Anjani', '-7.3080911969789515', '111.89856290817262', '14', 'HYBRID');
-INSERT INTO `janda` VALUES (4, 'Masripah', '-7.312539397170625', '111.90236091613771', '14', 'HYBRID');
+INSERT INTO `janda` VALUES (2, 2, '-7.3145825747521505', '111.90017223358156', '15', 'HYBRID');
+INSERT INTO `janda` VALUES (3, 3, '-7.3080911969789515', '111.89856290817262', '14', 'HYBRID');
+INSERT INTO `janda` VALUES (6, 31, '-7.317093967716315', '111.89369201660158', '15', 'HYBRID');
+INSERT INTO `janda` VALUES (7, 79, '-7.315519028018251', '111.89017295837404', '15', 'HYBRID');
+INSERT INTO `janda` VALUES (8, 44, '-7.301472022850145', '111.90000057220459', '15', 'HYBRID');
+INSERT INTO `janda` VALUES (9, 23, '-7.316796006578143', '111.88704013824464', '15', 'HYBRID');
+INSERT INTO `janda` VALUES (10, 69, '-7.3159021219698905', '111.90386295318604', '15', 'HYBRID');
 
 -- ----------------------------
 -- Table structure for kategori
@@ -7301,6 +7304,7 @@ INSERT INTO `sys_traffic` VALUES ('2018-11-30', '192.168.33.1{}', 1);
 INSERT INTO `sys_traffic` VALUES ('2019-08-30', '::1{}', 1);
 INSERT INTO `sys_traffic` VALUES ('2019-11-01', '192.168.33.1{}', 1);
 INSERT INTO `sys_traffic` VALUES ('2019-12-14', '', 2);
+INSERT INTO `sys_traffic` VALUES ('2019-12-15', '', 2);
 
 -- ----------------------------
 -- Table structure for teks_berjalan
@@ -12537,15 +12541,10 @@ INSERT INTO `tweb_wil_clusterdesa` VALUES (5, '0', '0', 'SENGGIGI', 4, '-7.31402
 INSERT INTO `tweb_wil_clusterdesa` VALUES (6, '0', '-', 'SENGGIGI', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (7, '-', '-', 'SENGGIGI', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (8, '001', '-', 'SENGGIGI', 0, '', '', 0, '', '');
-INSERT INTO `tweb_wil_clusterdesa` VALUES (9, '0', '0', 'KERANDANGAN', 1, '-7.3080911969789515', '111.89856290817262', 16, '[[[-7.308852613665106,111.89723253250122],[-7.310681753928425,111.89882040023805],[-7.310681753928425,111.90073013305664],[-7.308831344548228,111.90248966217042],[-7.304535004430573,111.90105199813843],[-7.305236891504473,111.89828395843506]]]', 'HYBRID');
-INSERT INTO `tweb_wil_clusterdesa` VALUES (10, '0', '-', 'KERANDANGAN', 0, '', '', 0, '', '');
-INSERT INTO `tweb_wil_clusterdesa` VALUES (11, '-', '-', 'KERANDANGAN', 0, '', '', 0, '', '');
-INSERT INTO `tweb_wil_clusterdesa` VALUES (12, '002', '-', 'KERANDANGAN', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (13, '0', '0', 'LOCO', 2, '-7.312539397170625', '111.90236091613771', 15, '[[[-7.311049574289583,111.9007730484009],[-7.306531649217609,111.90485000610353],[-7.306957035922871,111.91081523895265],[-7.319505761442988,111.91038608551027],[-7.3217177035976615,111.90532207489015],[-7.320143822805739,111.90176010131836]]]', 'HYBRID');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (14, '0', '-', 'LOCO', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (15, '-', '-', 'LOCO', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (16, '003', '-', 'LOCO', 0, '', '', 0, '', '');
-INSERT INTO `tweb_wil_clusterdesa` VALUES (17, '001', '-', 'KERANDANGAN', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (18, '005', '-', 'SENGGIGI', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (19, '005', '-', 'MANGSIT', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (20, '005', '-', 'LOCO', 0, '', '', 0, '', '');
@@ -12555,10 +12554,8 @@ INSERT INTO `tweb_wil_clusterdesa` VALUES (23, '004', '-', 'SENGGIGI', 0, '', ''
 INSERT INTO `tweb_wil_clusterdesa` VALUES (24, '004', '-', 'LOCO', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (25, '001', '-', 'LOCO', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (26, '002', '-', 'MANGSIT', 0, '', '', 0, '', '');
-INSERT INTO `tweb_wil_clusterdesa` VALUES (27, '004', '-', 'KERANDANGAN', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (28, '003', '-', 'MANGSIT', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (29, '006', '-', 'SENGGIGI', 0, '', '', 0, '', '');
-INSERT INTO `tweb_wil_clusterdesa` VALUES (30, '006', '-', 'KERANDANGAN', 0, '', '', 0, '', '');
 INSERT INTO `tweb_wil_clusterdesa` VALUES (31, '002', '-', 'SENGGIGI', 0, '', '', 0, '', '');
 
 -- ----------------------------
@@ -12584,7 +12581,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', '$2y$10$CfFhuvLXa3RNotqOPYyW2.JujLbAbZ4YO0PtxIRBz4QDLP0/pfH6.', 1, 'admin@combine.or.id', '2019-12-14 18:11:53', 1, 'Administrator', 'ADMIN', '321', 'favicon.png', 'a8d4080245664ed2049c1b2ded7cac30');
+INSERT INTO `user` VALUES (1, 'admin', '$2y$10$CfFhuvLXa3RNotqOPYyW2.JujLbAbZ4YO0PtxIRBz4QDLP0/pfH6.', 1, 'admin@combine.or.id', '2019-12-15 06:06:10', 1, 'Administrator', 'ADMIN', '321', 'favicon.png', 'a8d4080245664ed2049c1b2ded7cac30');
 
 -- ----------------------------
 -- Table structure for user_grup

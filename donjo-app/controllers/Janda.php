@@ -78,7 +78,7 @@ class Janda extends Admin_Controller
 		if ($id) {
 			$temp = $this->janda_model->cluster_by_id($id);
 			$data['janda'] = $temp['janda'];
-			$data['individu'] = $this->janda_model->get_penduduk($temp['id_kepala']);
+			$data['individu'] = $this->janda_model->get_penduduk($temp['id_janda']);
 			if (empty($data['individu']))
 				$data['individu'] = NULL;
 			else {
@@ -91,7 +91,7 @@ class Janda extends Admin_Controller
 			$data['form_action'] = site_url("janda/insert");
 		}
 
-		$data['dusun_id'] = $this->janda_model->get_dusun_maps($id);
+		$data['janda'] = $this->janda_model->get_janda_maps($id);
 
 		$nav['act'] = 205;
 		$nav['act_sub'] = 206;
@@ -109,7 +109,7 @@ class Janda extends Admin_Controller
 		if ($cari != '')
 			$_SESSION['cari'] = $cari;
 		else unset($_SESSION['cari']);
-		redirect('sid_core');
+		redirect('janda');
 	}
 
 	public function insert($dusun = '')
@@ -121,14 +121,14 @@ class Janda extends Admin_Controller
 	public function update($id = '')
 	{
 		$this->janda_model->update($id);
-		redirect('sid_core');
+		redirect('janda');
 	}
 
 	public function delete($id = '')
 	{
-		$this->redirect_hak_akses('h', 'sid_core');
+		$this->redirect_hak_akses('h', 'janda');
 		$this->janda_model->delete($id);
-		redirect('sid_core');
+		redirect('janda');
 	}
 
 	public function sub_rw($id_dusun = '')
@@ -194,10 +194,10 @@ class Janda extends Admin_Controller
 				$ex = $data['individu'];
 				$data['penduduk'] = $this->janda_model->list_penduduk_ex($ex['id']);
 			}
-			$data['form_action'] = site_url("sid_core/update_rw/$id_dusun/$rw");
+			$data['form_action'] = site_url("janda/update_rw/$id_dusun/$rw");
 		} else {
 			$data['rw'] = NULL;
-			$data['form_action'] = site_url("sid_core/insert_rw/$id_dusun");
+			$data['form_action'] = site_url("janda/insert_rw/$id_dusun");
 		}
 
 		$nav['act'] = 2;
@@ -213,20 +213,20 @@ class Janda extends Admin_Controller
 	public function insert_rw($dusun = '')
 	{
 		$this->janda_model->insert_rw($dusun);
-		redirect("sid_core/sub_rw/$dusun");
+		redirect("janda/sub_rw/$dusun");
 	}
 
 	public function update_rw($dusun = '', $rw = '')
 	{
 		$this->janda_model->update_rw($dusun, $rw);
-		redirect("sid_core/sub_rw/$dusun");
+		redirect("janda/sub_rw/$dusun");
 	}
 
 	public function delete_rw($id_dusun = '', $id = '')
 	{
-		$this->redirect_hak_akses('h', "sid_core/sub_rw/$id_dusun");
+		$this->redirect_hak_akses('h', "janda/sub_rw/$id_dusun");
 		$this->janda_model->delete_rw($id);
-		redirect("sid_core/sub_rw/$id_dusun");
+		redirect("janda/sub_rw/$id_dusun");
 	}
 
 	public function sub_rt($id_dusun = '', $rw = '')
@@ -315,10 +315,10 @@ class Janda extends Admin_Controller
 				$ex = $data['individu'];
 				$data['penduduk'] = $this->janda_model->list_penduduk_ex($ex['id']);
 			}
-			$data['form_action'] = site_url("sid_core/update_rt/$id_dusun/$rw/$id_cluster");
+			$data['form_action'] = site_url("janda/update_rt/$id_dusun/$rw/$id_cluster");
 		} else {
 			$data['rt'] = NULL;
-			$data['form_action'] = site_url("sid_core/insert_rt/$id_dusun/$rw");
+			$data['form_action'] = site_url("janda/insert_rt/$id_dusun/$rw");
 		}
 
 		$nav['act'] = 2;
@@ -334,23 +334,23 @@ class Janda extends Admin_Controller
 	public function insert_rt($dusun = '', $rw = '')
 	{
 		$this->janda_model->insert_rt($dusun, $rw);
-		redirect("sid_core/sub_rt/$dusun/$rw");
+		redirect("janda/sub_rt/$dusun/$rw");
 	}
 
 	public function update_rt($dusun = '', $rw = '', $id_cluster = 0)
 	{
 		$this->janda_model->update_rt($id_cluster);
-		redirect("sid_core/sub_rt/$dusun/$rw");
+		redirect("janda/sub_rt/$dusun/$rw");
 	}
 
 	public function delete_rt($id_cluster = '')
 	{
-		$this->redirect_hak_akses('h', "sid_core/sub_rt/$id_dusun/$rw");
+		$this->redirect_hak_akses('h', "janda/sub_rt/$id_dusun/$rw");
 		$temp = $this->janda_model->cluster_by_id($id_cluster);
 		$id_dusun = $temp['id_dusun'];
 		$rw = $temp['rw'];
 		$this->janda_model->delete_rt($id_cluster);
-		redirect("sid_core/sub_rt/$id_dusun/$rw");
+		redirect("janda/sub_rt/$id_dusun/$rw");
 	}
 
 	public function warga($id = '')
@@ -398,12 +398,12 @@ class Janda extends Admin_Controller
 		redirect("penduduk/index/1/0");
 	}
 
-	public function ajax_kantor_dusun_maps($id = '')
+	public function ajax_janda_maps($id = '')
 	{
-		$nav['act_sub'] = 20;
+		$nav['act_sub'] = 206;
 		$data['desa'] = $this->config_model->get_data();
-		$data['dusun'] = $this->janda_model->get_dusun_maps($id);
-		$data['form_action'] = site_url("sid_core/update_kantor_dusun_map/$id");
+		$data['janda'] = $this->janda_model->get_janda_maps($id);
+		$data['form_action'] = site_url("janda/update_janda_map/$id");
 		$header = $this->header_model->get_data();
 		$sebutan_desa = ucwords($this->setting->sebutan_desa);
 		$namadesa =  $data['desa']['nama_desa'];
@@ -412,12 +412,12 @@ class Janda extends Admin_Controller
 		if (!empty($data['desa']['lat'] && !empty($data['desa']['lng']))) {
 			$this->load->view('header', $header);
 			$this->load->view('nav', $nav);
-			$this->load->view("sid/wilayah/ajax_kantor_dusun_maps", $data);
+			$this->load->view("janda/data/ajax_janda_maps", $data);
 			$this->load->view('footer');
 		} else {
 			$_SESSION['success'] = -1;
-			$_SESSION['error_msg'] = "Lokasi Kantor $sebutan_desa $namadesa Belum Dilengkapi";
-			redirect("sid_core");
+			$_SESSION['error_msg'] = "Lokasi Janda $namadesa Belum Dilengkapi";
+			redirect("janda");
 		}
 	}
 
@@ -430,9 +430,9 @@ class Janda extends Admin_Controller
 		$data['nama_wilayah'] = ucwords($this->setting->sebutan_dusun . " " . $data['wil_ini']['dusun'] . " " . $sebutan_desa . " " . $data['wil_atas']['nama_desa']);
 		$data['wilayah'] = ucwords($this->setting->sebutan_dusun);
 		$data['breadcrumb'] = array(
-			array('link' => site_url('sid_core'), 'judul' => "Daftar " . $data['wilayah']),
+			array('link' => site_url('janda'), 'judul' => "Daftar " . $data['wilayah']),
 		);
-		$data['form_action'] = site_url("sid_core/update_wilayah_dusun_map/$id");
+		$data['form_action'] = site_url("janda/update_wilayah_dusun_map/$id");
 		$header = $this->header_model->get_data();
 		$namadesa =  $data['wil_atas']['nama_desa'];
 		if (!empty($data['wil_atas']['lat'] && !empty($data['wil_atas']['lng'] && !empty($data['wil_atas']['path'])))) {
@@ -443,22 +443,22 @@ class Janda extends Admin_Controller
 		} else {
 			$_SESSION['success'] = -1;
 			$_SESSION['error_msg'] = "Peta Lokasi/Wilayah $sebutan_desa $namadesa Belum Dilengkapi";
-			redirect("sid_core");
+			redirect("janda");
 		}
 	}
 
-	public function update_kantor_dusun_map($id = '')
+	public function update_janda_map($id = '')
 	{
 		$sebutan_dusun = ucwords($this->setting->sebutan_dusun);
 		$namadusun =  $this->input->post('dusun');
 		$iddusun =  $this->input->post('id');
 
-		$update_kantor = $this->janda_model->update_kantor_dusun_map($id);
+		$update_kantor = $this->janda_model->update_janda_map($id);
 
 		if ($update_kantor) {
-			$this->janda_model->update_kantor_dusun_map($id);
+			$this->janda_model->update_janda_map($id);
 		} else {
-			redirect("sid_core");
+			redirect("janda");
 			$_SESSION['success'] = 1;
 		}
 	}
@@ -474,7 +474,7 @@ class Janda extends Admin_Controller
 		if ($update_wilayah) {
 			$this->janda_model->update_wilayah_dusun_map($id);
 		} else {
-			redirect("sid_core");
+			redirect("janda");
 			$_SESSION['success'] = 1;
 		}
 	}
@@ -488,7 +488,7 @@ class Janda extends Admin_Controller
 
 		$data['dusun_rw'] = $this->janda_model->get_dusun_maps($id_dusun);
 		$data['rw'] = $this->janda_model->get_rw_maps($dusun, $rw);
-		$data['form_action'] = site_url("sid_core/update_kantor_rw_map/$id_dusun/$rw");
+		$data['form_action'] = site_url("janda/update_kantor_rw_map/$id_dusun/$rw");
 		$header = $this->header_model->get_data();
 		$sebutan_dusun = ucwords($this->setting->sebutan_dusun);
 
@@ -501,7 +501,7 @@ class Janda extends Admin_Controller
 		} else {
 			$_SESSION['success'] = -1;
 			$_SESSION['error_msg'] = "Lokasi Kantor $sebutan_dusun $dusun Belum Dilengkapi";
-			redirect("sid_core/sub_rw/$id_dusun");
+			redirect("janda/sub_rw/$id_dusun");
 		}
 	}
 
@@ -517,11 +517,11 @@ class Janda extends Admin_Controller
 		$data['wil_ini'] = $this->janda_model->get_rw_maps($dusun, $rw);
 		$data['nama_wilayah'] = 'RW ' . $data['wil_ini']['rw'] . " " . ucwords($sebutan_dusun . " " . $data['wil_ini']['dusun']);
 		$data['breadcrumb'] = array(
-			array('link' => site_url('sid_core'), 'judul' => "Daftar " . $sebutan_dusun),
-			array('link' => site_url("sid_core/sub_rw/$id_dusun"), 'judul' => 'Daftar RW')
+			array('link' => site_url('janda'), 'judul' => "Daftar " . $sebutan_dusun),
+			array('link' => site_url("janda/sub_rw/$id_dusun"), 'judul' => 'Daftar RW')
 		);
 		$data['wilayah'] = 'RW';
-		$data['form_action'] = site_url("sid_core/update_wilayah_rw_map/$id_dusun/$rw");
+		$data['form_action'] = site_url("janda/update_wilayah_rw_map/$id_dusun/$rw");
 		$header = $this->header_model->get_data();
 
 		if (!empty($data['wil_atas']['path'] && !empty($data['wil_atas']['lat'] && !empty($data['wil_atas']['lng'])))) {
@@ -532,7 +532,7 @@ class Janda extends Admin_Controller
 		} else {
 			$_SESSION['success'] = -1;
 			$_SESSION['error_msg'] = "Peta Lokasi/Wilayah $sebutan_dusun $dusun Belum Dilengkapi";
-			redirect("sid_core/sub_rw/$id_dusun");
+			redirect("janda/sub_rw/$id_dusun");
 		}
 	}
 
@@ -543,7 +543,7 @@ class Janda extends Admin_Controller
 		if ($update_kantor) {
 			$this->janda_model->update_kantor_rw_map($id);
 		} else {
-			redirect("sid_core/sub_rw/$id_dusun");
+			redirect("janda/sub_rw/$id_dusun");
 			$_SESSION['success'] = 1;
 		}
 	}
@@ -555,7 +555,7 @@ class Janda extends Admin_Controller
 		if ($update_wilayah) {
 			$this->janda_model->update_wilayah_rw_map($id);
 		} else {
-			redirect("sid_core/sub_rw/$id_dusun");
+			redirect("janda/sub_rw/$id_dusun");
 			$_SESSION['success'] = 1;
 		}
 	}
@@ -571,7 +571,7 @@ class Janda extends Admin_Controller
 		$data['rw'] = $this->janda_model->get_rw_maps($dusun, $rw);
 		$data['rt'] = $this->janda_model->get_rt_maps($id);
 		$idrt =  $data['rt']['id'];
-		$data['form_action'] = site_url("sid_core/update_kantor_rt_map/$id_dusun/$rw/$id");
+		$data['form_action'] = site_url("janda/update_kantor_rt_map/$id_dusun/$rw/$id");
 		$header = $this->header_model->get_data();
 		$sebutan_dusun = ucwords($this->setting->sebutan_dusun);
 
@@ -583,7 +583,7 @@ class Janda extends Admin_Controller
 		} else {
 			$_SESSION['success'] = -1;
 			$_SESSION['error_msg'] = "Lokasi Kantor $sebutan_dusun $dusun Belum Dilengkapi";
-			redirect("sid_core/sub_rt/$id_dusun/$rw");
+			redirect("janda/sub_rt/$id_dusun/$rw");
 		}
 	}
 
@@ -600,12 +600,12 @@ class Janda extends Admin_Controller
 		$data['wil_ini'] = $this->janda_model->get_rt_maps($id);
 		$data['nama_wilayah'] = 'RT ' . $data['wil_ini']['rt'] . ' RW ' . $data['wil_ini']['rw'] . ' ' . ucwords($sebutan_dusun . " " . $data['wil_ini']['dusun']);
 		$data['breadcrumb'] = array(
-			array('link' => site_url('sid_core'), 'judul' => "Daftar " . $sebutan_dusun),
-			array('link' => site_url("sid_core/sub_rw/$id_dusun"), 'judul' => 'Daftar RW'),
-			array('link' => site_url("sid_core/sub_rt/$id_dusun/{$data_rw['rw']}"), 'judul' => 'Daftar RT')
+			array('link' => site_url('janda'), 'judul' => "Daftar " . $sebutan_dusun),
+			array('link' => site_url("janda/sub_rw/$id_dusun"), 'judul' => 'Daftar RW'),
+			array('link' => site_url("janda/sub_rt/$id_dusun/{$data_rw['rw']}"), 'judul' => 'Daftar RT')
 		);
 		$data['wilayah'] = 'RT';
-		$data['form_action'] = site_url("sid_core/update_wilayah_rt_map/$id_dusun/$rw/$id");
+		$data['form_action'] = site_url("janda/update_wilayah_rt_map/$id_dusun/$rw/$id");
 		$header = $this->header_model->get_data();
 
 		if (!empty($data['wil_atas']['path'] && !empty($data['wil_atas']['lat'] && !empty($data['wil_atas']['lng'])))) {
@@ -616,7 +616,7 @@ class Janda extends Admin_Controller
 		} else {
 			$_SESSION['success'] = -1;
 			$_SESSION['error_msg'] = "Peta Lokasi/Wilayah $sebutan_dusun $dusun Belum Dilengkapi";
-			redirect("sid_core/sub_rt/$id_dusun/$rw");
+			redirect("janda/sub_rt/$id_dusun/$rw");
 		}
 	}
 
@@ -627,7 +627,7 @@ class Janda extends Admin_Controller
 		if ($update_kantor) {
 			$this->janda_model->update_kantor_rt_map($id);
 		} else {
-			redirect("sid_core/sub_rt/$id_dusun/$rw");
+			redirect("janda/sub_rt/$id_dusun/$rw");
 			$_SESSION['success'] = 1;
 		}
 	}
@@ -639,7 +639,7 @@ class Janda extends Admin_Controller
 		if ($update_kantor) {
 			$this->janda_model->update_wilayah_rt_map($id);
 		} else {
-			redirect("sid_core/sub_rt/$id_dusun/$rw");
+			redirect("janda/sub_rt/$id_dusun/$rw");
 			$_SESSION['success'] = 1;
 		}
 	}

@@ -41,7 +41,8 @@
 
 	private function list_data_sql()
 	{
-		$sql = " FROM janda ";
+		$sql = " FROM janda j
+		LEFT JOIN tweb_penduduk a ON j.id_janda = a.id";
 		$sql .= $this->search_sql();
 		return $sql;
 	}
@@ -59,7 +60,7 @@
 	{
 		$paging_sql = ' LIMIT ' . $offset . ',' . $limit;
 
-		$select_sql = "SELECT * ";
+		$select_sql = "SELECT *,j.id as id";
 		$sql = $select_sql . $this->list_data_sql();
 		$sql .= $paging_sql;
 
@@ -94,31 +95,21 @@
 
 	public function update($id = '')
 	{
-		if (empty($_POST['id_kepala']) || !is_numeric($_POST['id_kepala']))
-			unset($_POST['id_kepala']);
+		if (empty($_POST['id_janda']) || !is_numeric($_POST['id_janda']))
+			unset($_POST['id_janda']);
 
-		$data = $_POST;
-		$data['dusun'] = $_POST['dusun'];
-		$temp = $this->wilayah_model->cluster_by_id($id);
-		$this->db->where('dusun', $temp['dusun']);
-		$this->db->where('rw', '0');
-		$this->db->where('rt', '0');
-		$outp1 = $this->db->update('tweb_wil_clusterdesa', $data);
+		$this->db->where('id', $id);
+		$data['id_janda'] = $_POST['id_janda'];
+		$outp = $this->db->update('janda', $data);
 
-		// Ubah nama dusun di semua baris rw/rt untuk dusun ini
-		$outp2 = $this->db->where('dusun', $temp['dusun'])->update('tweb_wil_clusterdesa', array('dusun' => $data['dusun']));
-
-		if ($outp1 and $outp2) $_SESSION['success'] = 1;
+		if ($outp) $_SESSION['success'] = 1;
 		else $_SESSION['success'] = -1;
 	}
 
 	public function delete($id = '')
 	{
 		// Perlu hapus berdasarkan nama, supaya baris RW dan RT juga terhapus
-		$temp = $this->cluster_by_id($id);
-		$dusun = $temp['dusun'];
-
-		$sql = "DELETE FROM tweb_wil_clusterdesa WHERE dusun = '$dusun'";
+		$sql = "DELETE FROM janda WHERE id = '$id'";
 		$outp = $this->db->query($sql);
 
 		if ($outp) $_SESSION['success'] = 1;
@@ -388,12 +379,12 @@
 		return $data;
 	}
 
-	public function update_kantor_dusun_map($id = '')
+	public function update_janda_map($id = '')
 	{
 		$data = $_POST;
 		$id = $_POST['id'];
 		$this->db->where('id', $id);
-		$outp = $this->db->update('tweb_wil_clusterdesa', $data);
+		$outp = $this->db->update('janda', $data);
 
 		if ($outp) $_SESSION['success'] = 1;
 		else $_SESSION['success'] = -1;
@@ -410,9 +401,9 @@
 		else $_SESSION['success'] = -1;
 	}
 
-	public function get_dusun_maps($id = '')
+	public function get_janda_maps($id = '')
 	{
-		$sql = "SELECT * FROM tweb_wil_clusterdesa WHERE id = ?";
+		$sql = "SELECT * FROM janda WHERE id = ?";
 		$query = $this->db->query($sql, $id);
 		return $query->row_array();
 	}
